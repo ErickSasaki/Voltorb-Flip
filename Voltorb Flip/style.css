@@ -1,0 +1,37 @@
+body{
+	background-color: #2eb82e;
+}
+.wrapper{
+	width: 1080px;
+	height: 600px;
+	border: solid 4px #248f24;
+	border-radius: 10px;
+	margin: auto;
+}
+.mid{
+	width: 540px;
+	margin: auto;
+}
+.game{
+	width: 540px;
+	height: 540px;
+	margin: auto;
+}
+.celula{
+	width: 80px;
+	height: 80px;
+	float: left;
+	margin: 5px;
+}
+.info{
+	background-color: lightblue;
+}
+.name{
+	text-align: center;
+	font-size: 30px;
+	margin: 10px auto;
+	width: 300px;
+}
+.name p{
+	margin: 0px;
+}
