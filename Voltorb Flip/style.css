@@ -4,10 +4,12 @@ body{
 	color: white;
 	text-shadow: -1px 1px black;
 }
-.wrapper{
-	width: 1080px;
+.bordered{
 	border: solid 4px #248f24;
 	border-radius: 10px;
+}
+.wrapper{
+	width: 1080px;
 	margin: auto;
 	display: flex;
 }
@@ -18,8 +20,6 @@ body{
 	margin: 50px 20px 10px;
 	padding: 25px 10px;
 	font-size: 25px;
-	border: solid 4px #248f24;
-	border-radius: 10px;
 	text-align: center;
 }
 .status input{
@@ -32,17 +32,17 @@ body{
 	padding-right: 3px;
 }
 #level{
-	margin: 250px 0px 10px;
+	margin: 300px 0px 10px;
 }
-.status button{
+button{
 	height: 35px;
 	width: 115px;
 	background-color: #0099ff;
 	border: solid 3px;
 	border-radius: 7px;
-}
-.status button:hover{
 	cursor: pointer;
+}
+button:hover{
 	background-color: #99d6ff;
 }
 .status p{
@@ -85,6 +85,22 @@ body{
 .name p{
 	margin: 0px;
 }
-.card {
+.divCard {
 	background-image: url("imagens/tapped.png");
+}
+.gameOver{
+	width: 300px;
+	position: absolute; left: 50%; top: 40%;
+	background: #2eb82e;
+	margin-left: -150px;
+	text-align: center;
+	font-size: 30px;
+	padding: 0 0 10px;
+}
+.gameOver p{
+	margin: 10px;
+}
+#explosion{
+	width: 160px;
+	position: relative; top: -160px; left: -35px;	
 }

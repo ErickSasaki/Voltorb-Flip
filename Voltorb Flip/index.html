@@ -6,14 +6,13 @@
 	<link rel="stylesheet" type="text/css" href="style.css">
 </head>
 <body>
-	<div class="wrapper">
-		<div class="status">
+	<div class="wrapper bordered">
+		<div class="status bordered">
 			<label for="inputScoreAtual">Score Atual</label>
-			<input type="text" name="inputScoreAtual" value="0" readonly>
+			<input type="text" id="inputScoreAtual" name="inputScoreAtual" value="0" readonly>
 			<label for="inputScoreTotal">Score Total</label>
-			<input type="text" name="inputScoreTotal" value="0" readonly>
+			<input type="text" id="inputScoreTotal" name="inputScoreTotal" value="0" readonly>
 			<p id="level">Level 1</p>
-			<button type="button">Play!</button>
 		</div>
 		<div class="mid">
 			<div class="name">
@@ -21,8 +20,18 @@
 			</div>
 			<div class="game">
 			</div>
+			<div id="gameOver" class="gameOver bordered" hidden>
+				<p>Game Over!</p>
+				<label for="btnTryAgain"></label>
+				<button name="btnTryAgain" class="tryAgain" onclick="newGame(this)">Try Again!</button>
+			</div>
+			<div id="continue" class="gameOver bordered" hidden>
+				<p>Você Venceu!</p>
+				<label for="btnContinue"></label>
+				<button name="btnContinue" class="continue" onclick="newGame(this)">Next Level!</button>
+			</div>
 		</div>
-		<div class="status">
+		<div class="status bordered">
 			<p>Rank</p>
 		</div>
 	</div>
