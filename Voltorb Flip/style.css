@@ -32,7 +32,7 @@ body{
 	padding-right: 3px;
 }
 #level{
-	margin: 300px 0px 10px;
+	margin: 80px 0px 10px;
 }
 button{
 	height: 35px;
@@ -86,6 +86,7 @@ button:hover{
 	margin: 0px;
 }
 .divCard {
+	position: relative;
 	background-image: url("imagens/tapped.png");
 }
 .gameOver{
@@ -103,4 +104,55 @@ button:hover{
 #explosion{
 	width: 160px;
 	position: relative; top: -160px; left: -35px;	
+}
+.divMemo{
+	margin-top: 15px;
+	display: inline-block;
+	width: 190px;
+	height: 180px;
+	padding: 10px 0 0 0;
+}
+.memoCard{
+	display: inline-block;
+	margin: 10px;
+	width: 60px;
+	height: 60px;
+	border: solid 3px #2eb82e;
+}
+#memory{
+	padding: 1px;
+	font-size: 20px;
+	margin: auto;
+	position: relative;
+	top: 25px;
+	background: #2eb82e;
+	width: 75px;
+}
+.memoImg{
+	width: 100%;
+	cursor: pointer;
+}
+.checked{
+	border: solid 3px white;
+	border-radius: 3px;
+}
+.smallVoltorb{
+	position: absolute;
+	top: 7px;
+	left: 7px;
+}
+.smallX1{
+	position: absolute;
+	top: 7px;
+	left: 53px;
+}
+.smallX2{
+	position: absolute;
+	top: 50px;
+	left: 7px;
+}
+.smallX3{
+	position: absolute;
+	top: 51px;
+	left: 53px;
 }

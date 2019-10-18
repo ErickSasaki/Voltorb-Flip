@@ -2,14 +2,15 @@ let nivel = 1;
 let gameOver = false;
 let win;
 let jogar = false;
+let cardChecked = [false, false, false, false];
 const inputScoreTotal = document.getElementById("inputScoreTotal");
 const inputScoreAtual = document.getElementById("inputScoreAtual");
 
 //define o numero de bombas e pontos baseado no nivel
-function geraNivel(){
+function geraNivel() {
 	let bombas, x2, x3;
 
-	switch(nivel){
+	switch (nivel) {
 		case 1: {
 			x3 = Math.floor(Math.random() * 3);
 			break;
@@ -52,16 +53,16 @@ function geraNivel(){
 }
 
 //cria e popula o tabuleiro
-function geraJogo(){
+function geraJogo() {
 	document.getElementById("level").innerHTML = `Level ${nivel}`;
 	score(0);
 
 	//uma array com 5 arrays dentro, forma uma matriz
-	let tabuleiro = [[],[],[],[],[]];
+	let tabuleiro = [[], [], [], [], []];
 
 	//repete 5 vezes cada, vai formar uma matriz 5x5 e colocar valor 0 em todos os campos (pra facilitar a visualização)
-	for(let x in tabuleiro){
-		for(let y in tabuleiro){
+	for (let x in tabuleiro) {
+		for (let y in tabuleiro) {
 			tabuleiro[x][y] = 0;
 		}
 	}
@@ -69,8 +70,8 @@ function geraJogo(){
 	let nivelInfo = geraNivel();
 
 	//Coloca x2, x3 e bombas aleatoriamente na array tabuleiro.
-	function preencheTabuleiro(num, nome){
-		for(let i = 0; i < num; i++){
+	function preencheTabuleiro(num, nome) {
+		for (let i = 0; i < num; i++) {
 			let linha;
 			let coluna;
 			let ok;
@@ -78,7 +79,7 @@ function geraJogo(){
 				linha = random(5);
 				coluna = random(5);
 				//verifica se o local gerado tem algum valor, como eu coloquei 0 em todos, se tiver 0 pode mudar
-				if(tabuleiro[linha][coluna] == 0){
+				if (tabuleiro[linha][coluna] == 0) {
 					tabuleiro[linha][coluna] = nome;
 					ok = true;
 				}
@@ -97,25 +98,25 @@ function geraJogo(){
 	preencheTabuleiro(nivelInfo.x3, 3);
 	preencheTabuleiro(nivelInfo.bombas, "BM");
 
-	for(let x in tabuleiro){
-		for(let y in tabuleiro){
-			if(tabuleiro[x][y] == 0){
+	for (let x in tabuleiro) {
+		for (let y in tabuleiro) {
+			if (tabuleiro[x][y] == 0) {
 				tabuleiro[x][y] = 1;
 			}
 		}
-	} 
+	}
 
 	//cria o tabuleiro na tela adicionando suas respectivas imagens.
-	function geraTabuleiro(){
+	function geraTabuleiro() {
 		const divGame = document.getElementsByClassName("game");
-		for(let x = 0; x < 6; x++){
-			for(let y in tabuleiro){
+		for (let x = 0; x < 6; x++) {
+			for (let y in tabuleiro) {
 				let divCelula = document.createElement("div");
 				divGame[0].appendChild(divCelula);
 				divCelula.classList.add("celula");
 
 				//gambiarra, a ultima celula de cada linha tem que ser a celula da quantidade de numero e voltorb
-				if(x == 5){
+				if (x == 5) {
 					divCelula.classList.add("info");
 					//continue faz com que o for passe pra proxima repetição
 					continue;
@@ -126,33 +127,33 @@ function geraJogo(){
 				let imagem = document.createElement("img");
 
 				//adiciona as imagens nas celulas
-				if(tabuleiro[x][y] == 1){
-					imagem.setAttribute("src","imagens/x1.png");
+				if (tabuleiro[x][y] == 1) {
+					imagem.setAttribute("src", "imagens/x1.png");
 					imagem.classList.add("x1", "card");
 				}
-				if(tabuleiro[x][y] == 2){
-					imagem.setAttribute("src","imagens/x2.png");
+				if (tabuleiro[x][y] == 2) {
+					imagem.setAttribute("src", "imagens/x2.png");
 					imagem.classList.add("x2", "card");
 				}
-				if(tabuleiro[x][y] == 3){
-					imagem.setAttribute("src","imagens/x3.png");
+				if (tabuleiro[x][y] == 3) {
+					imagem.setAttribute("src", "imagens/x3.png");
 					imagem.classList.add("x3", "card");
 				}
-				if(tabuleiro[x][y] == "BM"){
-					imagem.setAttribute("src","imagens/voltorb.png");
+				if (tabuleiro[x][y] == "BM") {
+					imagem.setAttribute("src", "imagens/voltorb.png");
 					imagem.classList.add("BM", "card");
 				}
 
 				//esconde as imagens até que seja clicado
 				imagem.setAttribute("hidden", "true");
-				divCelula.addEventListener("click", function(){
+				divCelula.addEventListener("click", function () {
 					jogar(imagem);
 				});
 
 				divCelula.appendChild(imagem);
 			}
 
-			if(x == 5){
+			if (x == 5) {
 				continue;
 			}
 			let divCelula = document.createElement("div");
@@ -166,20 +167,20 @@ function geraJogo(){
 
 		//Coloca a soma das linhas e colunas e a quantidade de bombas.
 		let divInfo = document.getElementsByClassName("info");
-		for(let x in divInfo){
+		for (let x in divInfo) {
 			let bombCont = 0;
 			let soma = 0;
-			if(x < 5){
-				for(let y in tabuleiro){
-					if(tabuleiro[x][y] == "BM"){
+			if (x < 5) {
+				for (let y in tabuleiro) {
+					if (tabuleiro[x][y] == "BM") {
 						bombCont += 1;
 					} else {
 						soma += tabuleiro[x][y];
 					}
 				}
 			} else {
-				for(let i = 0; i < 5; i++){
-					if(tabuleiro[i][x - 5] == "BM"){
+				for (let i = 0; i < 5; i++) {
+					if (tabuleiro[i][x - 5] == "BM") {
 						bombCont += 1;
 					} else {
 						soma += tabuleiro[i][x - 5];
@@ -188,19 +189,19 @@ function geraJogo(){
 			}
 
 			//coloca os backgrounds coloridos
-			if(x == 0 || x == 5){
+			if (x == 0 || x == 5) {
 				divInfo[x].style = "background-image: url(\"imagens/infoOrange.png\")";
 			}
-			if(x == 1 || x == 6){
+			if (x == 1 || x == 6) {
 				divInfo[x].style = "background-image: url(\"imagens/infoGreen.png\")";
 			}
-			if(x == 2 || x == 7){
-				divInfo[x].style = "background-image: url(\"imagens/infoBlue.png\")";	
+			if (x == 2 || x == 7) {
+				divInfo[x].style = "background-image: url(\"imagens/infoBlue.png\")";
 			}
-			if(x == 3 || x == 8){
+			if (x == 3 || x == 8) {
 				divInfo[x].style = "background-image: url(\"imagens/infoPink.png\")";
 			}
-			if(x == 4 || x == 9){
+			if (x == 4 || x == 9) {
 				divInfo[x].style = "background-image: url(\"imagens/infoGray.png\")";
 			}
 
@@ -210,90 +211,136 @@ function geraJogo(){
 	}
 
 	//retira o atributo hidden das imagens
-	function jogar(imagem){
-		if(gameOver == true || jogar == false){
-			console.log("damn skaarl!");
+	function jogar(imagem) {
+		if (gameOver == true || jogar == false) {
 			return;
 		}
-	
-		imagem.removeAttribute("hidden");
-		imagem.classList.add("untap");
-		const card = document.getElementsByClassName("card");
+		let divImagem = imagem.parentNode;
 
-		//vericica se todos x2 e x3 ja foram desvirados
-		for(let i = 0; i < 25; i++){
-			win = true;
-			if(card[i].classList.contains("x2") && !(card[i].classList.contains("untap"))){
-				win = false;
-				break;
+		if (cardChecked[0] == true) {
+			setSmallCard(divImagem, "imagens/smallVoltorb.png", "smallVoltorb");
+		}
+		else if (cardChecked[1] == true) {
+			setSmallCard(divImagem, "imagens/smallX1.png", "smallX1");
+		}
+		else if (cardChecked[2] == true) {
+			setSmallCard(divImagem, "imagens/smallX2.png", "smallX2");
+		}
+		else if (cardChecked[3] == true) {
+			setSmallCard(divImagem, "imagens/smallX3.png", "smallX3");
+		}
+		else {
+			imagem.removeAttribute("hidden");
+			imagem.classList.add("untap");
+			const card = document.getElementsByClassName("card");
+
+			//vericica se todos x2 e x3 ja foram desvirados
+			for (let i = 0; i < 25; i++) {
+				win = true;
+				if (card[i].classList.contains("x2") && !(card[i].classList.contains("untap"))) {
+					win = false;
+					break;
+				}
+				else if (card[i].classList.contains("x3") && !(card[i].classList.contains("untap"))) {
+					win = false;
+					break;
+				}
 			}
-			else if(card[i].classList.contains("x3") && !(card[i].classList.contains("untap"))){
-				win = false;
-				break;
+
+			if (imagem.classList.contains("x2")) {
+				score(2);
+			}
+			else if (imagem.classList.contains("x3")) {
+				score(3);
+			}
+			//seta o game over
+			else if (imagem.classList.contains("BM")) {
+				inputScoreTotal.value = Number(inputScoreTotal.value) + Number(inputScoreAtual.value);
+				gameOver = true;
+				voltorb(imagem);
+				nivel = 1;
+			}
+
+			if (win == true) {
+				desviraCards();
+				setTimeout(function () {
+					document.getElementById("continue").removeAttribute("hidden");
+				}, 2500)
+				inputScoreTotal.value = Number(inputScoreTotal.value) + Number(inputScoreAtual.value);
+				jogar == false;
+				if (nivel != 7) {
+					nivel++;
+				}
 			}
 		}
-
-		if(imagem.classList.contains("x2")){
-			score(2);
-		}
-		else if(imagem.classList.contains("x3")){
-			score(3);
-		}
-		//seta o game over
-		else if(imagem.classList.contains("BM")){
-			inputScoreTotal.value = Number(inputScoreTotal.value) + Number(inputScoreAtual.value);
-			gameOver = true;
-			voltorb(imagem);
-			nivel = 1;
-		}
-
-		if(win == true){
-			desviraCards();
-			setTimeout(function(){
-				document.getElementById("continue").removeAttribute("hidden");
-			}, 2500)
-			inputScoreTotal.value = Number(inputScoreTotal.value) + Number(inputScoreAtual.value);
-			jogar == false;
-			if(nivel != 7){
-				nivel++;	
-			}
-		}
-
 	}
-	
-	
+
+
 	geraTabuleiro();
-	
-	console.log(nivelInfo);
-	console.log(tabuleiro);
 }
 
-function desviraCards(){
+function setSmallCard(div, src, classe) {
+	for (let i = 0; i < div.children.length; i++) {
+		if (div.childNodes[i].classList.contains(classe)) {
+			div.removeChild(div.childNodes[i]);
+			return;
+		}
+	}
+	let img = document.createElement("img");
+	img.setAttribute("src", src);
+	img.classList.add(classe);
+	div.appendChild(img);
+}
+
+function memorySystem() {
+	const memoCard = document.getElementsByClassName("memoCard");
+
+	for (let i = 0; i < memoCard.length; i++) {
+		memoCard[i].addEventListener("click", function () {
+			if (memoCard[i].classList.contains("checked")) {
+				memoCard[i].classList.remove("checked");
+				cardChecked[i] = false;
+			} else {
+				for (let i = 0; i < memoCard.length; i++) {
+					if (memoCard[i].classList.contains("checked")) {
+						memoCard[i].classList.remove("checked");
+						cardChecked[i] = false;
+					}
+				}
+				memoCard[i].classList.add("checked");
+				cardChecked[i] = true;
+			}
+			console.log(cardChecked);
+		})
+	}
+}
+
+function desviraCards() {
 	const card = document.getElementsByClassName("card");
-	for(let i = 0; i < 25; i++){
+	for (let i = 0; i < 25; i++) {
 		card[i].removeAttribute("hidden");
 	}
 }
 
-function voltorb(imagem){
+function voltorb(imagem) {
 	const explosion = document.createElement("img");
 	explosion.setAttribute("src", "imagens/explosion.gif");
 	explosion.id = "explosion";
 	imagem.parentNode.appendChild(explosion);
-	
-	setTimeout( function() {
+
+	setTimeout(function () {
 		explosion.parentNode.removeChild(explosion);
 		imagem.setAttribute("src", "imagens/voltorbFainted.png");
 		desviraCards();
-	}, 1000 );
-	setTimeout( function(){
+	}, 1000);
+	setTimeout(function () {
 		document.getElementById("gameOver").removeAttribute("hidden");
 	}, 2500);
 }
 
-function newGame(btn){
+function newGame(btn) {
 	btn.parentNode.setAttribute("hidden", "true")
-	if(gameOver == true){
+	if (gameOver == true) {
 		inputScoreTotal.value = 0;
 		gameOver = false;
 	}
@@ -303,11 +350,11 @@ function newGame(btn){
 	geraJogo();
 }
 
-function score(quant){
-	if(quant == 0){
+function score(quant) {
+	if (quant == 0) {
 		inputScoreAtual.value = 0;
 	}
-	if(inputScoreAtual.value == 0){
+	if (inputScoreAtual.value == 0) {
 		inputScoreAtual.value = quant;
 	} else {
 		inputScoreAtual.value *= quant;
@@ -315,11 +362,12 @@ function score(quant){
 }
 
 //cria numeros randomicos
-function random(max){
+function random(max) {
 	return Math.floor(Math.random() * max);
 }
 
 //chama a função geraJogo quando carregar a tela
-window.onload = function(){
+window.onload = function () {
+	memorySystem();
 	geraJogo();
 }
